@@ -12,23 +12,24 @@ Equipment
 
 Deliverables and Implementation Plan
 ----
-- Record and replay joint angles <br>
-Lead: Amar Patel  
-Deadline: 11/20
-    - [x] Install ROS on individual machines
-    - [x] Start brainstorming how to move the arm
-    - [X] Verify the simulator is running and working
-    - [ ] Create a way for the CV data to communicate with Jon's Python script
-    - [ ] Verify that CV data actually triggers the joint sequence
-
 - ROS and Python <br>
 Lead: Jon McMillan  
 Deadline: 11/20
     - [x] Install ROS on individual machines
     - [x] Implement a Python Script that loops over joint configurations
-    - [ ] Make sure the Python code actually runs the arm
-    - [ ] ROS Sawyer configuration
+    - [x] Make sure the Python code actually runs the arm
+    - [x] Make sure it is able to record and do playback
     - [ ] Tailor the speed or the iterations of the loop to determine the arm sequence
+
+- Record and replay joint angles <br>
+Lead: Amar Patel  
+Deadline: 11/20
+    - [x] Install ROS on individual machines
+    - [x] Start brainstorming how to move the arm
+    - [x] Verify the simulator is running and working
+    - [x] See if Jon's python script has suitable playback 
+    - [ ] Create a way for the CV data to communicate with Jon's Python script
+    - [ ] Verify that CV data actually triggers the joint sequence
 
 - Website Controller <br>
 Lead: Bandar Albegmi  
