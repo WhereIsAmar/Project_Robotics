@@ -18,30 +18,30 @@ Deadline: 11/20
     - [x] Install ROS on individual machines
     - [x] Start brainstorming how to move the arm
     - [X] Verify the simulator is running and working
-    - [] Create a way for the CV data to communicate with Jon's Python script
-    - [] Verify that CV data actually triggers the joint sequence
+    - [ ] Create a way for the CV data to communicate with Jon's Python script
+    - [ ] Verify that CV data actually triggers the joint sequence
 
 - ROS and Python <br>
 Lead: Jon McMillan  
 Deadline: 11/20
     - [x] Install ROS on individual machines
     - [x] Implement a Python Script that loops over joint configurations
-    - [] Make sure the Python code actually runs the arm
-    - [] ROS Sawyer configuration
-    - [] Tailor the speed or the iterations of the loop to determine the arm sequence
+    - [ ] Make sure the Python code actually runs the arm
+    - [ ] ROS Sawyer configuration
+    - [ ] Tailor the speed or the iterations of the loop to determine the arm sequence
 
 - Website Controller <br>
 Lead: Bandar Albegmi  
 Deadline: 11/30  
   - [x] Build a basic website that has Start/Stop using Bootstrap
-  - []  Determine how to communicate over ROS and send data to Simulator
+  - [ ]  Determine how to communicate over ROS and send data to Simulator
   - [ ] Add images of our faces and enhance the design
  
 - Create a vision controller <br>
 Lead: Abdullah Baijkhaif  
 Deadline: 12/4
   - [x] Install OpenCV Python Package & Verify it works with a webcam
-  - []  Recognize an individual from our group
+  - [ ]  Recognize an individual from our group
   - [] If an individual is recognized, perform a special handshake.
   
 Demo
