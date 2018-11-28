@@ -28,6 +28,7 @@ Deadline: 11/20
     - [x] Start brainstorming how to move the arm
     - [x] Verify the simulator is running and working
     - [x] See if Jon's python script has suitable playback 
+    - [x] Setting up our GitHub environment to manage everyone's contributions
     - [ ] Create a way for the CV data to communicate with Jon's Python script
     - [ ] Verify that CV data actually triggers the joint sequence
 
