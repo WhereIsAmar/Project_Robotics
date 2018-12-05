@@ -43,7 +43,7 @@ Deadline: 11/30
 Lead: Abdullah Baijkhaif  
 Deadline: 12/4
   - [x] Install OpenCV Python Package & Verify it works with a webcam
-  - [ ]  Recognize an individual from our group
+  - [x]  Recognize an individual from our group
   - [ ] If an individual is recognized, perform a special handshake.
   
 Demo
