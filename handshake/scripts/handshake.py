@@ -51,4 +51,4 @@ if __name__ == '__main__':
     if len(sys.argv) > 1 and sys.argv[1] == 'record':
         record(limb)
     else:
-        playback(hd, limb, "amar")
+        playback(hd, limb, sys.argv[2])
