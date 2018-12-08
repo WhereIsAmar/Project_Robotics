@@ -4,6 +4,7 @@ from PIL import Image
 import os
 import pickle
 import imutils
+import sys
 
 base_dir = os.path.dirname(os.path.abspath(__file__)) #the file directory without the file name
 images_dir = os.path.join(base_dir,"images")
@@ -50,6 +51,11 @@ def trainImages():
 
 def saveImagesFromCam(destination):
     dest = os.path.join(images_dir, destination)
+    if os.path.exists(dest):
+        print("Folder exists!")
+        pass
+    else:
+        os.mkdir(dest)
     cam = cv.VideoCapture(1)
     #get the last pic num in the file dest
     picList = []
@@ -93,5 +99,5 @@ def saveImagesFromCam(destination):
     cam.release()
     cv.destroyAllWindows()
 
-saveImagesFromCam("Bandar")
+saveImagesFromCam("Alessandro")
 trainImages()
