@@ -37,9 +37,8 @@ def playback(hd, limb, name):
     print('exit')
 
 
-if __name__ == '__main__':
-    rospy.init_node('handshake')
-    print('Node initialized')
+def init_sawyer():
+    rospy.loginfo("initializing sawyer...")
 
     limb = intera_interface.Limb('right')
     hd = intera_interface.HeadDisplay()
@@ -47,6 +46,17 @@ if __name__ == '__main__':
 
     limb.move_to_neutral()
     head.set_pan(0.0)
+
+    rospy.loginfo("sawyer initialized")
+
+    return limb, hd, head
+
+
+if __name__ == '__main__':
+    rospy.init_node('handshake')
+    print('Node initialized')
+
+    limb, hd, _ = init_sawyer()
 
     if len(sys.argv) > 1 and sys.argv[1] == 'record':
         record(limb)

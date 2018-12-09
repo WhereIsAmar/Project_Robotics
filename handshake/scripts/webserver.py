@@ -1,18 +1,34 @@
-from http.server import BaseHTTPRequestHandler, HTTPServer
+#!/usr/bin/env python
+# from http.server import BaseHTTPRequestHandler, HTTPServer
+import SimpleHTTPServer
+import SocketServer
 import time
+import handshake
+import rospy
+import os
+
+
+HOST_NAME = os.getenv('HOST')
+PORT_NUMBER = 8080
+
 
 def playback(name):
-    print('Im going to play {}s handshake from a function.'.format(name))
+    limb, hd, _ = handshake.init_sawyer()
+    print(limb)
+    handshake.playback(hd, limb, name)
+
 
 def edit(name):
     print('not implemented yet {}'.format(name))
+
 
 ACTIONS = {
     'playback': playback,
     'edit': edit
 }
 
-class Server(BaseHTTPRequestHandler):
+
+class Server(SimpleHTTPServer.SimpleHTTPRequestHandler):
     def do_HEAD(self):
         return
 
@@ -32,15 +48,13 @@ class Server(BaseHTTPRequestHandler):
         return
 
 
-HOST_NAME = 'localhost'
-PORT_NUMBER = 8080
-
 if __name__ == '__main__':
-    httpd = HTTPServer((HOST_NAME, PORT_NUMBER), Server)
+    rospy.init_node('webserver')
+    httpd = SocketServer.TCPServer((HOST_NAME, PORT_NUMBER), Server)
     print(time.asctime(), 'Server UP - %s:%s' % (HOST_NAME, PORT_NUMBER))
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
         pass
-    httpd.server_close()
+    # httpd.server_close()
     print(time.asctime(), 'Server DOWN - %s:%s' % (HOST_NAME, PORT_NUMBER))
