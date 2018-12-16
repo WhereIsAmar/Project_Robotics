@@ -21,14 +21,20 @@ def record(limb, name):
     with open(path, 'w') as fh:
         movements = []
         while True:
-            print("Press enter to record position...")
-            if raw_input() == 'q':
+            print("Press enter to record position (name, delay) or q to quit...")
+            inp = raw_input()
+            if inp == 'q':
                 break
+
+            name, delay = inp.split()
+            delay = float(delay)
 
             movement = {
                 "angles": limb.joint_angles(),
-                "delay": 0.0
+                "delay": delay,
+                "name": name
             }
+
             movements.append(movement)
 
         fh.write(json.dumps(movements))
@@ -39,21 +45,23 @@ def record(limb, name):
 def playback(hd, limb, name):
     """ playback a handshake """
     rospy.loginfo('playing %s' % name)
-    limb.move_to_neutral(timeout=1)
+    limb.move_to_neutral()
     hd.display_image(file_path("{}.jpg".format(name)))
 
     with open(file_path("{}.json".format(name))) as fh:
         movements = json.loads(fh.read())
 
         for i, movement in enumerate(movements):
-            rospy.loginfo('Moving to position: {}'.format(i+1))
-            limb.move_to_joint_positions(movement['angles'], timeout=0.5)
+            rospy.loginfo('Moving to position: {} {}'.format(i+1, movement['name']))
+            limb.move_to_joint_positions(movement['angles'])
 
             rospy.loginfo('pausing {:.1f} seconds'.format(movement['delay']))
-            time.sleep(movement['delay'])
+            delay = movement['delay']
+            time.sleep(delay)
 
-    limb.move_to_neutral(timeout=1)
     rospy.loginfo('playback done')
+    time.sleep(5)
+    limb.move_to_neutral()
 
 
 def init_sawyer():
@@ -64,10 +72,12 @@ def init_sawyer():
     hd = intera_interface.HeadDisplay()
     head = intera_interface.Head()
 
-    limb.move_to_neutral(timeout=1)
-    head.set_pan(0.0, timeout=1)
+    limb.move_to_neutral()
+    hd.display_image("/home/jon/catkin_ws/src/sawyer_simulator/sawyer_gazebo/share/images/sawyer_sdk_research.png")
+    head.set_pan(0.0)
 
     rospy.loginfo("sawyer initialized")
+    time.sleep(5)
 
     return limb, hd, head
 
