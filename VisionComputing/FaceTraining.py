@@ -91,8 +91,7 @@ def saveImagesFromCam(destination):
                 cv.imwrite(os.path.join(dest, file_name), frame)
 
         cv.namedWindow("Frame", cv.WND_PROP_FULLSCREEN)
-        cv.setWindowProperty(
-            "Frame", cv.WND_PROP_FULLSCREEN, cv.WINDOW_FULLSCREEN)
+        cv.setWindowProperty("Frame", cv.WND_PROP_FULLSCREEN, cv.WINDOW_FULLSCREEN)
         cv.imshow('Frame', frame)
 
         # press q to stop.
