@@ -24,6 +24,12 @@ many cultures, and one that can be performed by a robotic arm. Handshakes vary
 by culture so it's important to be able to personalize and perform a variety of
 shakes.
 
+Team Organization
+------------------
+Our team consistently communicated over several mediums with both our professor and assistant graduate student to organize meetings and interaction with the Sawyer Arm. Our group met several times outside of the allotted time for the lab to coordinate learning with the ROS environment. 
+
+In order to remain focused on the goals, we had our team focused on micro deliverables to maximize efficiency. Coupled with this we always attempted to promote a healthy atmosphere for self-discovery and made it a priority to make sure everyone's ideas were heard.
+
 Methods
 -------
 The system was comprised of 4 components: the robot, a handshake controller, a
