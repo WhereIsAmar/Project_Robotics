@@ -4,14 +4,18 @@ import intera_interface
 import json
 import sys
 import time
+import os
+import std_msgs
+
+
+# simulator doesn't play nice and best to timeout moves. default 15.0
+TIMEOUT = 1.0
 
 
 def file_path(name):
-    """ get the file path to data files.
-
-    Note: temporarily hard coded for jon's computer
-    """
-    return "/home/jon/Project_Robotics/data/{}".format(name.lower())
+    """ get the file path to data files. """
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_dir, 'data', name.lower())
 
 
 def record(limb, name):
@@ -42,10 +46,10 @@ def record(limb, name):
     rospy.loginfo('recording complete. file saved at {}'.format(path))
 
 
-def playback(hd, limb, name):
+def playback(limb, hd, name):
     """ playback a handshake """
     rospy.loginfo('playing %s' % name)
-    limb.move_to_neutral()
+    limb.move_to_neutral(timeout=TIMEOUT)
     hd.display_image(file_path("{}.jpg".format(name)))
 
     with open(file_path("{}.json".format(name))) as fh:
@@ -53,7 +57,7 @@ def playback(hd, limb, name):
 
         for i, movement in enumerate(movements):
             rospy.loginfo('Moving to position: {} {}'.format(i+1, movement['name']))
-            limb.move_to_joint_positions(movement['angles'])
+            limb.move_to_joint_positions(movement['angles'], timeout=TIMEOUT)
 
             rospy.loginfo('pausing {:.1f} seconds'.format(movement['delay']))
             delay = movement['delay']
@@ -61,7 +65,17 @@ def playback(hd, limb, name):
 
     rospy.loginfo('playback done')
     time.sleep(5)
-    limb.move_to_neutral()
+    limb.move_to_neutral(timeout=TIMEOUT)
+
+
+def listen(limb, hd):
+    """ listen on /handshake/play topic """
+    def callback(data):
+        playback(limb, hd, str(data.data))
+
+    rospy.Subscriber("handshake/play", std_msgs.msg.String, callback)
+    rospy.loginfo('listening...')
+    rospy.spin()
 
 
 def init_sawyer():
@@ -72,13 +86,12 @@ def init_sawyer():
     hd = intera_interface.HeadDisplay()
     head = intera_interface.Head()
 
-    limb.move_to_neutral()
+    limb.move_to_neutral(timeout=TIMEOUT)
+    # TODO: Hardocoded to jon's computer
     hd.display_image("/home/jon/catkin_ws/src/sawyer_simulator/sawyer_gazebo/share/images/sawyer_sdk_research.png")
     head.set_pan(0.0)
 
     rospy.loginfo("sawyer initialized")
-    time.sleep(5)
-
     return limb, hd, head
 
 
@@ -94,5 +107,7 @@ if __name__ == '__main__':
 
     if sys.argv[1] == 'record':
         record(limb, sys.argv[2])
+    elif sys.argv[1] == 'listen':
+        listen(limb, hd)
     else:
-        playback(hd, limb, sys.argv[1])
+        playback(limb, hd, sys.argv[1])
